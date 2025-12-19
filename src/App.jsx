@@ -1,14 +1,31 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+// import { useState } from "react";
 import "./App.css";
 
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import DetailsPage from "./pages/DetailsPage";
+import NewItemPage from "./pages/NewItemPage";
+import EditPage from "./pages/EditPage";
+
+// import Navbar from "./components/Navbar";
+// import Footer from "./components/Footer";
+
 function App() {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
 
   return (
     <>
-      <h1>hola</h1>
+      {/* <Navbar /> */}
+
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/product/:id" element={<DetailsPage />} />
+          <Route path="/sell" element={<NewItemPage />} />
+          <Route path="/edit/:id" element={<EditPage />} />
+        </Routes>
+      </main>
+      {/* <Footer /> */}
     </>
   );
 }

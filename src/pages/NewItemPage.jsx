@@ -1,6 +1,4 @@
 function NewItemPage() {
-  return (
-    <div>NewItemPage</div>
-  )
+  return <div>New Item Page</div>;
 }
-export default NewItemPage
+export default NewItemPage;
