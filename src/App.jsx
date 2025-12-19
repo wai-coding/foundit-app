@@ -7,15 +7,15 @@ import DetailsPage from "./pages/DetailsPage";
 import NewItemPage from "./pages/NewItemPage";
 import EditPage from "./pages/EditPage";
 
-// import Navbar from "./components/Navbar";
-// import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 function App() {
   // const [count, setCount] = useState(0);
 
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
 
       <main>
         <Routes>
@@ -25,7 +25,7 @@ function App() {
           <Route path="/edit/:id" element={<EditPage />} />
         </Routes>
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }
