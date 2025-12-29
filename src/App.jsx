@@ -1,14 +1,13 @@
 // import { useState } from "react";
 import "./App.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import DetailsPage from "./pages/DetailsPage";
 import NewItemPage from "./pages/NewItemPage";
 import EditPage from "./pages/EditPage";
-
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 
 function App() {
   // const [count, setCount] = useState(0);

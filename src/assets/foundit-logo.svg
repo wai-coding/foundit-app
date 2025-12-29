@@ -1,0 +1,21 @@
+<svg width="220" height="64" viewBox="0 0 220 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="founditGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF6A00"></stop>
+      <stop offset="50%" stop-color="#FF2E88"></stop>
+      <stop offset="100%" stop-color="#6A5CFF"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- Symbol -->
+  <path d="M28 10C18 10 10 18 10 28C10 38 18 46 28 46C34 46 39 43 42 39L54 51" stroke="url(#founditGradient)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+
+  <!-- Discovery dot -->
+  <circle cx="28" cy="28" r="5" fill="url(#founditGradient)"></circle>
+
+  <!-- Text -->
+  <text x="70" y="42" font-family="Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="36" font-weight="700" fill="#3B4BFF">
+    found
+    <tspan fill="url(#founditGradient)">it</tspan>
+  </text>
+</svg>
