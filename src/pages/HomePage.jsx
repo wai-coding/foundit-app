@@ -41,24 +41,18 @@ function HomePage() {
       {products.length === 0 ? (
         <p>No products yet.</p>
       ) : (
-        <ul>
+        <ul className="products-grid">
           {products.map((p) => (
-            <li key={p.id}>
-              {/* Placeholder image used for all products (temporary) */}
-              <img
-                src={placeholderImg}
-                alt="Product placeholder"
-                className="product-img"
-              />
-              {/* Future version (real product images):
-  <img src={`/assets/${p.imgUrl}`} alt={p.title} className="product-img" />
-  */}
-              <strong>{p.title}</strong> — {p.price} €
-              <div>
+            <li key={p.id} className="product-card">
+              <img src={placeholderImg} alt={p.title} className="product-img" />
+
+              <h3>{p.title}</h3>
+              <p className="price">{p.price} €</p>
+
+              <div className="card-actions">
                 <button onClick={() => navigate(`/product/${p.id}`)}>
                   Details
                 </button>
-
                 <button onClick={() => navigate(`/edit/${p.id}`)}>Edit</button>
               </div>
             </li>
