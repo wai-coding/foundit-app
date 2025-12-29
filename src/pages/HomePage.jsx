@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import placeholderImg from "../assets/placeholder.png";
 
 const API_URL = "http://localhost:5005/products";
 
@@ -43,6 +44,15 @@ function HomePage() {
         <ul>
           {products.map((p) => (
             <li key={p.id}>
+              {/* Placeholder image used for all products (temporary) */}
+              <img
+                src={placeholderImg}
+                alt="Product placeholder"
+                className="product-img"
+              />
+              {/* Future version (real product images):
+  <img src={`/assets/${p.imgUrl}`} alt={p.title} className="product-img" />
+  */}
               <strong>{p.title}</strong> — {p.price} €
               <div>
                 <button onClick={() => navigate(`/product/${p.id}`)}>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import placeholderImg from "../assets/placeholder.png";
 
 const API_URL = "http://localhost:5005/products";
 
@@ -49,6 +50,15 @@ function DetailsPage() {
   return (
     <div>
       <h1>{product.title}</h1>
+      {/* Placeholder image used for all products (temporary) */}
+      <img
+        src={placeholderImg}
+        alt="Product placeholder"
+        className="product-img"
+      />
+      {/* Future version (real product images):
+  <img src={`/assets/${product.imgUrl}`} alt={product.title} className="product-img" />
+  */}
       <p>
         <strong>Price:</strong> {product.price} €
       </p>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import placeholderImg from "../assets/placeholder.png";
 
 const API_URL = "http://localhost:5005/products";
 
@@ -83,7 +84,15 @@ function EditPage() {
   return (
     <div>
       <h1>Edit Product</h1>
-
+      {/* Placeholder image used for all products (temporary) */}
+      <img
+        src={placeholderImg}
+        alt="Product placeholder"
+        className="product-img"
+      />
+      {/* Future version (real product images):
+  <img src={`/assets/${imgUrl}`} alt={title} className="product-img" />
+*/}
       <form onSubmit={handleSubmit}>
         <input
           value={title}
@@ -134,7 +143,7 @@ function EditPage() {
         />
         <button type="submit">Save</button>
       </form>
-              <button onClick={() => navigate("/")}>Back</button>
+      <button onClick={() => navigate("/")}>Back</button>
     </div>
   );
 }

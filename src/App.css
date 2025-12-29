@@ -18,11 +18,14 @@ ul {
 }
 
 li {
+  display: flex;
   background: #fafafa;
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 12px;
   margin-bottom: 10px;
+  gap: 12px;
+  align-items: center;
 }
 
 button {
@@ -127,4 +130,12 @@ h1 {
   background-color: #f5f5f5;
   color: #555;
   font-size: 14px;
+}
+.product-img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
 }
