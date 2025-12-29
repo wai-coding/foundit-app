@@ -1,16 +1,41 @@
-# React + Vite
+7. 3-DAY WORK PLAN
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+Day 1 – Setup & Read Operations
+X• Create GitHub repositories (frontend and backend)
+X• Initialize React app (Vite) and install dependencies
+X• Setup React Router and main application routes
+X• Setup json-server with products entity
+X• Create homepage (Browse products)
+X• Fetch and display products from backend
+X• Create products details page
+X• Fetch single products by id
+X• Implement basic navigation between pages
+End of Day 1:
+User can browse listings and view listing details.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Day 2 – Create, Update & Delete
+X• Create “Sell item” form page
+X• Implement form validation (required fields)
+X• Implement Create product (POST)
+X• Create Edit product page with pre-filled form
+X• Implement Update product (PUT/PATCH)
+X• Add Delete button
+X• Implement Delete product (DELETE)
+X• Redirect user after create, update and delete actions
+X• Add Back buttons for navigation
+End of Day 2:
+User can create, edit and delete listings.
 
-## React Compiler
-
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Day 3 – Polish, Testing & Deploy
+• Improve UI layout and styling
+X• Add loading indicators
+X• Add basic error handling (failed requests, missing data)
+X• Test all CRUD flows end-to-end
+• Deploy frontend application
+• Deploy backend or prepare clear instructions to run locally
+• Final review of MVP requirements
+• Prepare demo flow for presentation
+End of Day 3:
+Application is fully functional, deployed and ready to be presented.
