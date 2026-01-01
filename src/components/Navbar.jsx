@@ -8,7 +8,9 @@ const Navbar = () => {
     <header className="navbar">
       <div className="navbar-container">
         <div className="nav-left">
-          <img src={logo} alt="Foundit logo" className="logo-img" />
+          <Link to="/">
+            <img src={logo} alt="Foundit logo" className="logo-img" />
+          </Link>
         </div>
 
         <nav className="nav-center">

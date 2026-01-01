@@ -177,3 +177,14 @@ textarea {
   color: #555;
   font-size: 14px;
 }
+.filters-bar {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0 20px;
+  flex-wrap: wrap;
+}
+
+.filters-bar input,
+.filters-bar select {
+  padding: 6px 8px;
+}
