@@ -162,18 +162,10 @@ function HomePage() {
         <ul className="products-grid">
           {visibleProducts.map((p) => (
             <li key={p.id} className="product-card">
-              {/* Placeholder image used for all products (temporary) */}
-              <img src={placeholderImg} alt={p.title} className="product-img" />
-
-              {/* Future version (real product images):
-              <img
-                src={`/assets/${p.imgUrl}`}
-                alt={p.title}
-                className="product-img"
-              />
-              */}
+              <img src={`${p.imgUrl}`} alt={p.title} className="product-img" />
 
               <h3>{p.title}</h3>
+              <p className="condition">{p.condition}</p>
               <p className="price">{p.price} €</p>
 
               <div className="card-actions">

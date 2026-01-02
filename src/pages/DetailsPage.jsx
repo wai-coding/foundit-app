@@ -50,15 +50,11 @@ function DetailsPage() {
   return (
     <div>
       <h1>{product.title}</h1>
-      {/* Placeholder image used for all products (temporary) */}
       <img
-        src={placeholderImg}
-        alt="Product placeholder"
+        src={`${product.imgUrl}`}
+        alt={product.title}
         className="product-img"
       />
-      {/* Future version (real product images):
-  <img src={`/assets/${product.imgUrl}`} alt={product.title} className="product-img" />
-  */}
       <p>
         <strong>Price:</strong> {product.price} €
       </p>
@@ -77,7 +73,6 @@ function DetailsPage() {
       <p>
         <strong>Contact:</strong> {product.sellerContact}
       </p>
-
       <div>
         <button onClick={() => navigate(`/edit/${product.id}`)}>Edit</button>
         <button onClick={handleDelete}>Delete</button>

@@ -84,15 +84,9 @@ function EditPage() {
   return (
     <div>
       <h1>Edit Product</h1>
-      {/* Placeholder image used for all products (temporary) */}
-      <img
-        src={placeholderImg}
-        alt="Product placeholder"
-        className="product-img"
-      />
-      {/* Future version (real product images):
-  <img src={`/assets/${imgUrl}`} alt={title} className="product-img" />
-*/}
+
+      <img src={`${imgUrl}`} alt={title} className="product-img" />
+
       <form onSubmit={handleSubmit}>
         <input
           value={title}
