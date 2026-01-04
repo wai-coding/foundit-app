@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// Backend endpoint (json-server)
 const API_URL = "http://localhost:5005/products";
 
 function NewItemPage() {
+  // Navigation hook to redirect after successful creation
   const navigate = useNavigate();
 
+  // FORM STATE
+  // Each piece of state corresponds to one form field
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [imgUrl, setImgUrl] = useState("");
@@ -15,9 +19,12 @@ function NewItemPage() {
   const [sellerName, setSellerName] = useState("");
   const [sellerContact, setSellerContact] = useState("");
 
+  // FORM SUBMISSION HANDLER
+  // Sends the new product data to the backend (POST request)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Build product object from form state
     const newProduct = {
       title,
       price: Number(price),
@@ -38,12 +45,15 @@ function NewItemPage() {
 
       if (!response.ok) throw new Error("Failed to create product");
 
+      // Redirect to homepage after successful creation
       navigate("/");
     } catch (error) {
       alert(error.message);
     }
   };
 
+  // RENDER
+  // Displays the form for creating a new product
   return (
     <div>
       <h1>Sell a Product</h1>

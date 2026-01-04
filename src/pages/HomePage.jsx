@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import placeholderImg from "../assets/placeholder.png";
+import placeholderImg from "../assets/placeholder.png"; //fallback
 
 // Backend endpoint (json-server)
 const API_URL = "http://localhost:5005/products";

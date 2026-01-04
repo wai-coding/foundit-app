@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import placeholderImg from "../assets/placeholder.png";
+import placeholderImg from "../assets/placeholder.png"; //fallback
 
+// Backend endpoint (json-server)
 const API_URL = "http://localhost:5005/products";
 
 function DetailsPage() {
+  // Route params and navigation
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // DATA STATE
+  // Stores the fetched product
   const [product, setProduct] = useState(null);
+  // Loading + error UI states
   const [isLoading, setIsLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
 
+  // DATA FETCHING
+  // Fetch product details when the page loads or when id change
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -33,6 +40,8 @@ function DetailsPage() {
     fetchProduct();
   }, [id]);
 
+  // DELETE HANDLER
+  // Removes the product from the backend and redirects to homepage
   const handleDelete = async () => {
     try {
       const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
@@ -43,10 +52,13 @@ function DetailsPage() {
     }
   };
 
+  // EARLY RETURNS (for when the app is still loading data or if an error occurs during the fetch process)
   if (isLoading) return <p>Loading product...</p>;
   if (errorMsg) return <p>Error: {errorMsg}</p>;
   if (!product) return <p>Product not found.</p>;
 
+  // RENDER
+  // Displays full product information and available actions
   return (
     <div>
       <h1>{product.title}</h1>

@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import placeholderImg from "../assets/placeholder.png";
+import placeholderImg from "../assets/placeholder.png"; //fallback
 
+// Backend endpoint (json-server)
 const API_URL = "http://localhost:5005/products";
 
 function EditPage() {
+  // Route params and navigation
   const { id } = useParams();
   const navigate = useNavigate();
 
+  // Loading & error UI states
   const [isLoading, setIsLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
 
+  // FORM STATE (pre-filled with the product data)
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [imgUrl, setImgUrl] = useState("");
@@ -20,6 +24,8 @@ function EditPage() {
   const [sellerName, setSellerName] = useState("");
   const [sellerContact, setSellerContact] = useState("");
 
+  // DATA FETCHING
+  // Load the product once when the page opens (or when id changes)
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -31,6 +37,7 @@ function EditPage() {
 
         const data = await response.json();
 
+        // Fill the form with the existing product data (safe fallbacks)
         setTitle(data.title ?? "");
         setPrice(String(data.price ?? ""));
         setImgUrl(data.imgUrl ?? "");
@@ -49,6 +56,8 @@ function EditPage() {
     fetchProduct();
   }, [id]);
 
+  // FORM SUBMISSION
+  // Sends updated product data to the backend (PUT request)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -72,15 +81,18 @@ function EditPage() {
 
       if (!response.ok) throw new Error("Failed to update product");
 
+      // Redirect back to the product details page after saving
       navigate(`/product/${id}`);
     } catch (error) {
       alert(error.message);
     }
   };
 
+  // EARLY RETURNS (for when the app is still loading data or if an error occurs during the fetch process)
   if (isLoading) return <p>Loading...</p>;
   if (errorMsg) return <p>Error: {errorMsg}</p>;
 
+  // RENDER
   return (
     <div>
       <h1>Edit Product</h1>
