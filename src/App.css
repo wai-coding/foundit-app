@@ -179,6 +179,7 @@ textarea {
   color: #555;
   font-size: 14px;
 }
+
 .filters-bar {
   display: flex;
   gap: 10px;
@@ -190,6 +191,7 @@ textarea {
 .filters-bar select {
   padding: 6px 8px;
 }
+
 .error-page {
   text-align: center;
   padding: 4rem 1rem;
@@ -208,4 +210,26 @@ textarea {
   color: #fff;
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
+}
+
+.details-img {
+  width: 320px;
+  height: 320px;
+  object-fit: contain;
+  margin: 1rem 0;
+}
+
+/* ====== FOOTER ====== */
+.reviews {
+  margin-top: 2rem;
+  max-width: 500px;
+}
+
+.review {
+  border-top: 1px solid #e0e0e0;
+  padding: 0.75rem 0;
+}
+
+.review p {
+  margin: 4px 0;
 }

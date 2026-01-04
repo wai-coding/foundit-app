@@ -97,7 +97,11 @@ function EditPage() {
     <div>
       <h1>Edit Product</h1>
 
-      <img src={`${imgUrl}`} alt={title} className="product-img" />
+      <img
+        src={imgUrl?.trim() ? imgUrl : placeholderImg}
+        alt={title || "Product"}
+        className="product-img details-img"
+      />
 
       <form onSubmit={handleSubmit}>
         <input
