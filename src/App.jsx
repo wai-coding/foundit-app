@@ -9,6 +9,8 @@ import DetailsPage from "./pages/DetailsPage";
 import NewItemPage from "./pages/NewItemPage";
 import EditPage from "./pages/EditPage";
 
+import ErrorPage from "./pages/ErrorPage";
+
 function App() {
   // const [count, setCount] = useState(0);
 
@@ -22,6 +24,7 @@ function App() {
           <Route path="/product/:id" element={<DetailsPage />} />
           <Route path="/sell" element={<NewItemPage />} />
           <Route path="/edit/:id" element={<EditPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </main>
       <Footer />
