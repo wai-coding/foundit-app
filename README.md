@@ -13,8 +13,26 @@
 - **Filter and sort products**
 
   - Products can be filtered by category, condition, and status.
-  - Sorting options allow ordering by price, title, and date.
+  - Sorting options include:
+    - A–Z / Z–A (title)
+    - Price (ascending / descending)
+    - Most recent / oldest
   - All filtering and sorting is handled on the frontend.
+
+- **Pagination**
+
+  - Products are displayed with pagination on the homepage.
+  - A maximum of 12 products is shown per page.
+  - Page navigation buttons allow switching between pages.
+  - Pagination updates automatically when filters, search, or sorting change.
+
+- **Favorites (localStorage)**
+
+  - Users can mark products as favorites using a heart icon.
+  - Favorites are stored in the browser using `localStorage`.
+  - A Favorites mode allows viewing only favorited products.
+  - If no favorites exist, a temporary message is displayed.
+  - Removing the last favorite automatically returns the view to all products.
 
 - **Product status (available / sold)**
 
@@ -62,19 +80,9 @@
 
   - Navigation between pages is handled using React Router without page reloads.
 
-  ## Bonus Features
+## Bonus Features
 
 The following features were considered as possible improvements to the application but were **not implemented yet**:
-
-- **Favorites**
-
-  - Allow users to mark products as favorites.
-  - Favorited products could be stored using `localStorage` or persisted in the backend.
-
-- **Pagination**
-
-  - Display only 10 products at a time on the homepage.
-  - Navigation buttons (1, 2, 3, etc.) to load and display the next set of products.
 
 - **Multiple images on Details Page**
   - Support for displaying multiple images per product.
