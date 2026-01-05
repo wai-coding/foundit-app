@@ -248,3 +248,36 @@ textarea {
 .status.sold {
   color: #c62828;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin: 40px 0 20px;
+}
+
+.pagination button {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #d0d0d0;
+  background-color: #ffffff;
+  color: #333;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #f2f2f2;
+  border-color: #b5b5b5;
+}
+
+.pagination button:disabled {
+  background-color: #333;
+  color: #fff;
+  border-color: #333;
+  cursor: default;
+}

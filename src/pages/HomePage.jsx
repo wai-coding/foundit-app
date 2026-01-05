@@ -5,6 +5,8 @@ import placeholderImg from "../assets/placeholder.png"; //fallback
 // Backend endpoint (json-server)
 const API_URL = "http://localhost:5005/products";
 
+const PRODUCTS_PER_PAGE = 12;
+
 function HomePage() {
   // STATE MANAGEMENT
 
@@ -22,6 +24,8 @@ function HomePage() {
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [conditionFilter, setConditionFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
+
+  const [currentPage, setCurrentPage] = useState(1);
 
   const navigate = useNavigate();
 
@@ -49,6 +53,10 @@ function HomePage() {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, categoryFilter, conditionFilter, statusFilter, sortOption]);
+
   // SORT HANDLER
 
   // Updates the selected sorting option
@@ -73,7 +81,7 @@ function HomePage() {
     .filter((p) => {
       const matchesSearch = (p.title ?? "")
         .toLowerCase()
-        .includes((searchTerm ?? "").toLowerCase()); // Safe fallback if searchTerm is empty or undefined
+        .includes((searchTerm ?? "").toLowerCase());
 
       const matchesCategory =
         categoryFilter === "all" || p.category === categoryFilter;
@@ -100,15 +108,23 @@ function HomePage() {
         case "price-desc":
           return (b.price ?? 0) - (a.price ?? 0);
         case "recent":
-          // Higher id = more recent (json-server incremental ids)
           return (b.id ?? 0) - (a.id ?? 0);
         case "old":
           return (a.id ?? 0) - (b.id ?? 0);
         default:
-          // Keeps the original order from the API
           return 0;
       }
     });
+
+  const indexOfLastProduct = currentPage * PRODUCTS_PER_PAGE;
+  const indexOfFirstProduct = indexOfLastProduct - PRODUCTS_PER_PAGE;
+
+  const paginatedProducts = visibleProducts.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
+
+  const totalPages = Math.ceil(visibleProducts.length / PRODUCTS_PER_PAGE);
 
   // EARLY RETURNS (for when the app is still loading data or if an error occurs during the fetch process)
   if (isLoading) return <p>Loading products...</p>;
@@ -172,34 +188,50 @@ function HomePage() {
         </select>
       </div>
 
-      {visibleProducts.length === 0 ? (
+      {paginatedProducts.length === 0 ? (
         <p>No products found.</p>
       ) : (
-        <ul className="products-grid">
-          {visibleProducts.map((p) => (
-            <li key={p.id} className="product-card">
-              <img
-                src={p.imgUrl?.trim() ? p.imgUrl : placeholderImg}
-                alt={p.title}
-                className="product-img"
-              />
+        <>
+          <ul className="products-grid">
+            {paginatedProducts.map((p) => (
+              <li key={p.id} className="product-card">
+                <img
+                  src={p.imgUrl?.trim() ? p.imgUrl : placeholderImg}
+                  alt={p.title}
+                  className="product-img"
+                />
 
-              <h3>{p.title}</h3>
-              <p className="condition">{p.condition}</p>
-              <p className={`status ${p.status ?? "available"}`}>
-                {p.status ?? "available"}
-              </p>
-              <p className="price">{p.price} €</p>
+                <h3>{p.title}</h3>
+                <p className="condition">{p.condition}</p>
+                <p className={`status ${p.status ?? "available"}`}>
+                  {p.status ?? "available"}
+                </p>
+                <p className="price">{p.price} €</p>
 
-              <div className="card-actions">
-                <button onClick={() => navigate(`/product/${p.id}`)}>
-                  Details
-                </button>
-                <button onClick={() => navigate(`/edit/${p.id}`)}>Edit</button>
-              </div>
-            </li>
-          ))}
-        </ul>
+                <div className="card-actions">
+                  <button onClick={() => navigate(`/product/${p.id}`)}>
+                    Details
+                  </button>
+                  <button onClick={() => navigate(`/edit/${p.id}`)}>
+                    Edit
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <div className="pagination">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                disabled={page === currentPage}
+              >
+                {page}
+              </button>
+            ))}
+          </div>
+        </>
       )}
     </div>
   );
