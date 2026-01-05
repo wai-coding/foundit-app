@@ -23,6 +23,7 @@ function EditPage() {
   const [condition, setCondition] = useState("");
   const [sellerName, setSellerName] = useState("");
   const [sellerContact, setSellerContact] = useState("");
+  const [status, setStatus] = useState("available");
 
   // DATA FETCHING
   // Load the product once when the page opens (or when id changes)
@@ -46,6 +47,7 @@ function EditPage() {
         setCondition(data.condition ?? "");
         setSellerName(data.sellerName ?? "");
         setSellerContact(data.sellerContact ?? "");
+        setStatus(data.status ?? "available");
       } catch (error) {
         setErrorMsg(error.message);
       } finally {
@@ -70,6 +72,7 @@ function EditPage() {
       condition,
       sellerName,
       sellerContact,
+      status,
     };
 
     try {
@@ -151,6 +154,11 @@ function EditPage() {
           rows={4}
           required
         />
+
+        <select value={status} onChange={(e) => setStatus(e.target.value)}>
+          <option value="available">Available</option>
+          <option value="sold">Sold</option>
+        </select>
         <button type="submit">Save</button>
       </form>
       <button onClick={() => navigate("/")}>Back</button>

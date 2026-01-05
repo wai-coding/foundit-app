@@ -34,6 +34,7 @@ function NewItemPage() {
       condition,
       sellerName,
       sellerContact,
+      status: "available", // new products are always available
     };
 
     try {

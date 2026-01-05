@@ -12,14 +12,26 @@
 
 - **Filter and sort products**
 
-  - Products can be filtered by category and condition.
-  - Sorting options allow ordering by price, title and date.
+  - Products can be filtered by category, condition, and status.
+  - Sorting options allow ordering by price, title, and date.
   - All filtering and sorting is handled on the frontend.
+
+- **Product status (available / sold)**
+
+  - Each product has a status indicating whether it is available or sold.
+  - New products are always created as _available_.
+  - The status can be updated to _sold_ only through the edit page.
+  - Products can be filtered by status on the homepage.
 
 - **Product details page**
 
   - Each product has a dedicated details page.
-  - Displays full product information including description, price, condition, and seller details.
+  - Displays full product information including description, price, condition, status, and seller details.
+
+- **Fake user reviews**
+
+  - Displays mock user reviews on the product details page.
+  - Reviews are static and used only for UI demonstration purposes.
 
 - **Create new product (Sell page)**
 
@@ -64,16 +76,6 @@ The following features were considered as possible improvements to the applicati
   - Display only 10 products at a time on the homepage.
   - Navigation buttons (1, 2, 3, etc.) to load and display the next set of products.
 
-- **Listing status**
-
-  - Products could have a status such as _available_ or _sold_.
-  - Sold items could be visually distinguished or hidden from the main listing.
-
 - **Multiple images on Details Page**
-
   - Support for displaying multiple images per product.
   - Images could be shown as a gallery or carousel on the details page.
-
-- **Fake user reviews**
-  - Display mock user reviews on the product details page.
-  - Reviews would be static or generated data, used only for UI demonstration purposes.

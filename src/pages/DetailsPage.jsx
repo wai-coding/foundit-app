@@ -79,6 +79,10 @@ function DetailsPage() {
   if (errorMsg) return <p>Error: {errorMsg}</p>;
   if (!product) return <p>Product not found.</p>;
 
+  // Status fallback for older products that don't have the status field
+  const status = product.status ?? "available";
+  const statusLabel = status[0].toUpperCase() + status.slice(1);
+
   // RENDER
   // Displays full product information and available actions
   return (
@@ -107,6 +111,11 @@ function DetailsPage() {
       <p>
         <strong>Contact:</strong> {product.sellerContact}
       </p>
+      <p>
+        <strong>Status:</strong>{" "}
+        <span className={`status ${status}`}>{statusLabel}</span>
+      </p>
+
       <section className="reviews">
         <h2>Reviews</h2>
 

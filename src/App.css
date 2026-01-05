@@ -65,7 +65,7 @@ ul {
 
 /* ====== PRODUCT TEXT ====== */
 .product-card h3 {
-  font-size: 1vw;
+  font-size: 0.95rem;
   margin: 8px 0 4px;
 }
 
@@ -73,7 +73,7 @@ ul {
 .condition {
   font-weight: 600;
   margin-bottom: 12px;
-  font-size: 0.9vw;
+  font-size: 0.8rem;
 }
 
 /* ====== CARD ACTIONS ====== */
@@ -219,7 +219,7 @@ textarea {
   margin: 1rem 0;
 }
 
-/* ====== FOOTER ====== */
+/* ====== REVIEWS ====== */
 .reviews {
   margin-top: 2rem;
   max-width: 500px;
@@ -232,4 +232,19 @@ textarea {
 
 .review p {
   margin: 4px 0;
+}
+
+/* ====== STATUS ====== */
+.status {
+  font-weight: 600;
+  text-transform: capitalize;
+  font-size: 0.9rem;
+}
+
+.status.available {
+  color: #2e7d32;
+}
+
+.status.sold {
+  color: #c62828;
 }

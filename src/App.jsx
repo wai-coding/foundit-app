@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -12,8 +11,6 @@ import EditPage from "./pages/EditPage";
 import ErrorPage from "./pages/ErrorPage";
 
 function App() {
-  // const [count, setCount] = useState(0);
-
   return (
     <>
       <Navbar />

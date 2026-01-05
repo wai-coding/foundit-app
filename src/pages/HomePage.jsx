@@ -21,6 +21,7 @@ function HomePage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [conditionFilter, setConditionFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   const navigate = useNavigate();
 
@@ -80,7 +81,13 @@ function HomePage() {
       const matchesCondition =
         conditionFilter === "all" || p.condition === conditionFilter;
 
-      return matchesSearch && matchesCategory && matchesCondition;
+      const status = p.status ?? "available";
+
+      const matchesStatus = statusFilter === "all" || status === statusFilter;
+
+      return (
+        matchesSearch && matchesCategory && matchesCondition && matchesStatus
+      );
     })
     .sort((a, b) => {
       switch (sortOption) {
@@ -145,6 +152,15 @@ function HomePage() {
           ))}
         </select>
 
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+        >
+          <option value="all">All statuses</option>
+          <option value="available">Available</option>
+          <option value="sold">Sold</option>
+        </select>
+
         <select value={sortOption} onChange={handleSortChange}>
           <option value="">Default</option>
           <option value="az">A - Z</option>
@@ -170,6 +186,9 @@ function HomePage() {
 
               <h3>{p.title}</h3>
               <p className="condition">{p.condition}</p>
+              <p className={`status ${p.status ?? "available"}`}>
+                {p.status ?? "available"}
+              </p>
               <p className="price">{p.price} €</p>
 
               <div className="card-actions">
