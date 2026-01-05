@@ -281,3 +281,8 @@ textarea {
   border-color: #333;
   cursor: default;
 }
+
+.fav-notice {
+  font-size: 0.6rem;
+  color: #ff0000;
+}

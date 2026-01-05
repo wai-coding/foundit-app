@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import placeholderImg from "../assets/placeholder.png"; //fallback
+import { getFavoriteIds, toggleFavorite } from "../components/Favorites";
 
 // Backend endpoint (json-server)
 const API_URL = "http://localhost:5005/products";
@@ -25,6 +26,14 @@ function HomePage() {
   const [conditionFilter, setConditionFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
 
+  // Favorites (with localStorage)
+  const [favoriteIds, setFavoriteIds] = useState([]);
+  const [showFavorites, setShowFavorites] = useState(false);
+  const prevFavCount = useRef(0);
+  const [favNotice, setFavNotice] = useState("");
+  const favTimeoutRef = useRef(null);
+
+  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
 
   const navigate = useNavigate();
@@ -53,9 +62,50 @@ function HomePage() {
     fetchProducts();
   }, []);
 
+  // Load favorites from localStorage
+  useEffect(() => {
+    const favs = getFavoriteIds();
+    setFavoriteIds(favs);
+    prevFavCount.current = favs.length;
+  }, []);
+
+  // Cleanup timeout (in case user navigates away before it clears)
+  useEffect(() => {
+    return () => {
+      if (favTimeoutRef.current) {
+        clearTimeout(favTimeoutRef.current);
+        favTimeoutRef.current = null;
+      }
+    };
+  }, []);
+
+  // Reset to page 1 whenever filters/sort/search or mode changes
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTerm, categoryFilter, conditionFilter, statusFilter, sortOption]);
+  }, [
+    searchTerm,
+    categoryFilter,
+    conditionFilter,
+    statusFilter,
+    sortOption,
+    showFavorites,
+  ]);
+
+  useEffect(() => {
+    // If favorites become empty while in Favorites mode, switch back to All products
+    if (showFavorites && prevFavCount.current > 0 && favoriteIds.length === 0) {
+      setShowFavorites(false);
+      setCurrentPage(1);
+      setFavNotice("");
+
+      if (favTimeoutRef.current) {
+        clearTimeout(favTimeoutRef.current);
+        favTimeoutRef.current = null;
+      }
+    }
+
+    prevFavCount.current = favoriteIds.length;
+  }, [showFavorites, favoriteIds]);
 
   // SORT HANDLER
 
@@ -76,8 +126,53 @@ function HomePage() {
     new Set(products.map((p) => p.condition).filter(Boolean))
   ).sort();
 
+  // Favorites toggle handler
+  const handleToggleFavorite = (id) => {
+    const next = toggleFavorite(id);
+    setFavoriteIds(next);
+  };
+
+  // Favorites button behavior (If user clicks Favorites but list is empty, show a message and keep All products visible. Otherwise toggle between Favorites and All products)
+  const handleFavoritesClick = () => {
+    if (showFavorites) {
+      setShowFavorites(false);
+      setFavNotice("");
+
+      if (favTimeoutRef.current) {
+        clearTimeout(favTimeoutRef.current);
+        favTimeoutRef.current = null;
+      }
+
+      return;
+    }
+
+    if (favoriteIds.length === 0) {
+      setFavNotice("No favorites yet.");
+
+      if (favTimeoutRef.current) clearTimeout(favTimeoutRef.current);
+      favTimeoutRef.current = setTimeout(() => {
+        setFavNotice("");
+        favTimeoutRef.current = null;
+      }, 2000);
+
+      return;
+    }
+
+    if (favTimeoutRef.current) {
+      clearTimeout(favTimeoutRef.current);
+      favTimeoutRef.current = null;
+    }
+
+    setShowFavorites(true);
+  };
+
+  // Decide which base list are displayed (all products or only favorites)
+  const baseProducts = showFavorites
+    ? products.filter((p) => favoriteIds.includes(String(p.id)))
+    : products;
+
   // Derived list (filters products based on search, category, and condition & sorts the filtered results according to the selected sort option)
-  const visibleProducts = [...products]
+  const visibleProducts = [...baseProducts]
     .filter((p) => {
       const matchesSearch = (p.title ?? "")
         .toLowerCase()
@@ -116,6 +211,7 @@ function HomePage() {
       }
     });
 
+  // Pagination calculations (applies after filtering/sorting)
   const indexOfLastProduct = currentPage * PRODUCTS_PER_PAGE;
   const indexOfFirstProduct = indexOfLastProduct - PRODUCTS_PER_PAGE;
 
@@ -186,38 +282,56 @@ function HomePage() {
           <option value="recent">Most recent</option>
           <option value="old">Oldest</option>
         </select>
+
+        <button type="button" onClick={handleFavoritesClick}>
+          {showFavorites ? "All products" : "Favorites"}
+        </button>
+
+        {favNotice && <p className="fav-notice">{favNotice}</p>}
       </div>
 
-      {paginatedProducts.length === 0 ? (
-        <p>No products found.</p>
+      {visibleProducts.length === 0 ? (
+        <p>
+          {showFavorites
+            ? favoriteIds.length === 0
+              ? "No favorites yet."
+              : "No favorites match your filters."
+            : "No products found."}
+        </p>
       ) : (
         <>
           <ul className="products-grid">
-            {paginatedProducts.map((p) => (
-              <li key={p.id} className="product-card">
-                <img
-                  src={p.imgUrl?.trim() ? p.imgUrl : placeholderImg}
-                  alt={p.title}
-                  className="product-img"
-                />
+            {paginatedProducts.map((p) => {
+              const status = p.status ?? "available";
+              const statusLabel = status[0].toUpperCase() + status.slice(1);
+              const isFav = favoriteIds.includes(String(p.id));
+              return (
+                <li key={p.id} className="product-card">
+                  <img
+                    src={p.imgUrl?.trim() ? p.imgUrl : placeholderImg}
+                    alt={p.title}
+                    className="product-img"
+                  />
 
-                <h3>{p.title}</h3>
-                <p className="condition">{p.condition}</p>
-                <p className={`status ${p.status ?? "available"}`}>
-                  {p.status ?? "available"}
-                </p>
-                <p className="price">{p.price} €</p>
+                  <h3>{p.title}</h3>
+                  <p className="condition">{p.condition}</p>
+                  <p className={`status ${status}`}>{statusLabel}</p>
+                  <p className="price">{p.price} €</p>
 
-                <div className="card-actions">
-                  <button onClick={() => navigate(`/product/${p.id}`)}>
-                    Details
-                  </button>
-                  <button onClick={() => navigate(`/edit/${p.id}`)}>
-                    Edit
-                  </button>
-                </div>
-              </li>
-            ))}
+                  <div className="card-actions">
+                    <button onClick={() => navigate(`/product/${p.id}`)}>
+                      Details
+                    </button>
+                    <button onClick={() => navigate(`/edit/${p.id}`)}>
+                      Edit
+                    </button>
+                    <button onClick={() => handleToggleFavorite(p.id)}>
+                      {isFav ? "❤️" : "🤍"}
+                    </button>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="pagination">
