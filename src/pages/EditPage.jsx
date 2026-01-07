@@ -58,6 +58,23 @@ function EditPage() {
     fetchProduct();
   }, [id]);
 
+  const CATEGORIES = [
+    "Accessories",
+    "Audio",
+    "Computers",
+    "Electronics",
+    "Home",
+    "Home Entertainment",
+    "Mobile Phones",
+    "Networking",
+    "Photography",
+    "Storage",
+    "Tablets",
+    "Transport",
+    "Video Games",
+    "Wearables",
+  ];
+
   // FORM SUBMISSION
   // Sends updated product data to the backend (PUT request)
   const handleSubmit = async (e) => {
@@ -97,71 +114,107 @@ function EditPage() {
 
   // RENDER
   return (
-    <div>
+    <div className="edit-page">
       <h1>Edit Product</h1>
 
-      <img
-        src={imgUrl?.trim() ? imgUrl : placeholderImg}
-        alt={title || "Product"}
-        className="product-img details-img"
-      />
+      <div className="edit-layout">
+        {/* IMAGE PREVIEW */}
+        <div className="edit-image">
+          <img
+            src={imgUrl?.trim() ? imgUrl : placeholderImg}
+            alt={title || "Product"}
+          />
+        </div>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
-          required
-        />
-        <input
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          placeholder="Price"
-          type="number"
-          min="0"
-          required
-        />
-        <input
-          value={imgUrl}
-          onChange={(e) => setImgUrl(e.target.value)}
-          placeholder="Image URL"
-        />
-        <input
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          placeholder="Category"
-        />
-        <input
-          value={condition}
-          onChange={(e) => setCondition(e.target.value)}
-          placeholder="Condition"
-        />
-        <input
-          value={sellerName}
-          onChange={(e) => setSellerName(e.target.value)}
-          placeholder="Seller name"
-        />
-        <input
-          value={sellerContact}
-          onChange={(e) => setSellerContact(e.target.value)}
-          placeholder="Seller contact"
-        />
+        {/* FORM */}
+        <form className="edit-form" onSubmit={handleSubmit}>
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Title"
+            required
+          />
 
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
-          rows={4}
-          required
-        />
+          <input
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            placeholder="Price"
+            type="number"
+            min="0"
+            required
+          />
 
-        <select value={status} onChange={(e) => setStatus(e.target.value)}>
-          <option value="available">Available</option>
-          <option value="sold">Sold</option>
-        </select>
-        <button type="submit">Save</button>
-      </form>
-      <button onClick={() => navigate("/")}>Back</button>
+          <input
+            value={imgUrl}
+            onChange={(e) => setImgUrl(e.target.value)}
+            placeholder="Image URL"
+          />
+
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+          >
+            <option value="">Select category</option>
+            {CATEGORIES.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
+
+          <select
+            value={condition}
+            onChange={(e) => setCondition(e.target.value)}
+            required
+          >
+            <option value="">Select condition</option>
+            <option value="New">New</option>
+            <option value="Used - Excellent">Used - Excellent</option>
+            <option value="Used - Very Good">Used - Very Good</option>
+            <option value="Used - Good">Used - Good</option>
+          </select>
+
+          <input
+            value={sellerName}
+            onChange={(e) => setSellerName(e.target.value)}
+            placeholder="Seller name"
+          />
+
+          <input
+            value={sellerContact}
+            onChange={(e) => setSellerContact(e.target.value)}
+            placeholder="Seller contact"
+          />
+
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Description"
+            rows={4}
+            required
+          />
+
+          <select value={status} onChange={(e) => setStatus(e.target.value)}>
+            <option value="available">Available</option>
+            <option value="sold">Sold</option>
+          </select>
+
+          <div className="form-actions">
+            <button className="btn-primary" type="submit">
+              Save changes
+            </button>
+
+            <button
+              type="button"
+              className="btn-secondary"
+              onClick={() => navigate(-1)}
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

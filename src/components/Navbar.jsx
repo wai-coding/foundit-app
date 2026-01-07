@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import logo from "../assets/foundit-logo.svg";
 import profileLogo from "../assets/profile-icon.png";
 
-const Navbar = () => {
+const Navbar = ({ showFavorites, onFavoritesClick }) => {
   return (
     <header className="navbar">
       <div className="navbar-container">
@@ -19,6 +19,13 @@ const Navbar = () => {
         </nav>
 
         <div className="nav-right">
+          <button
+            className={`nav-fav-btn ${showFavorites ? "active" : ""}`}
+            onClick={onFavoritesClick}
+            aria-label="Favorites"
+          >
+            ♥
+          </button>
           <img src={profileLogo} alt="Profile" className="avatar" />
         </div>
       </div>

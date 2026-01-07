@@ -56,61 +56,82 @@ function NewItemPage() {
   // RENDER
   // Displays the form for creating a new product
   return (
-    <div>
+    <div className="sell-page">
       <h1>Sell a Product</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
-          required
-        />
-        <input
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          placeholder="Price"
-          type="number"
-          min="0"
-          required
-        />
-        <input
-          value={imgUrl}
-          onChange={(e) => setImgUrl(e.target.value)}
-          placeholder="Image URL"
-        />
-        <input
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          placeholder="Category"
-        />
-        <input
-          value={condition}
-          onChange={(e) => setCondition(e.target.value)}
-          placeholder="Condition"
-        />
-        <input
-          value={sellerName}
-          onChange={(e) => setSellerName(e.target.value)}
-          placeholder="Seller name"
-        />
-        <input
-          value={sellerContact}
-          onChange={(e) => setSellerContact(e.target.value)}
-          placeholder="Seller contact"
-        />
+      <form className="sell-form" onSubmit={handleSubmit}>
+        <div className="form-section">
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Title"
+            required
+          />
 
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
-          rows={4}
-          required
-        />
+          <input
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            placeholder="Price (€)"
+            type="number"
+            min="0"
+            required
+          />
 
-        <button type="submit">Create</button>
+          <input
+            value={imgUrl}
+            onChange={(e) => setImgUrl(e.target.value)}
+            placeholder="Image URL"
+          />
+
+          <input
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            placeholder="Category"
+          />
+
+          <input
+            value={condition}
+            onChange={(e) => setCondition(e.target.value)}
+            placeholder="Condition"
+          />
+        </div>
+
+        <div className="form-section">
+          <input
+            value={sellerName}
+            onChange={(e) => setSellerName(e.target.value)}
+            placeholder="Seller name"
+          />
+
+          <input
+            value={sellerContact}
+            onChange={(e) => setSellerContact(e.target.value)}
+            placeholder="Seller contact"
+          />
+
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Description"
+            rows={4}
+            required
+          />
+        </div>
+
+        <div className="form-actions">
+          <button type="submit" className="btn-primary">
+            Create
+          </button>
+
+          <button
+            type="button"
+            className="btn-secondary"
+            onClick={() => navigate("/")}
+          >
+            Back
+          </button>
+        </div>
       </form>
-      <button onClick={() => navigate("/")}>Back</button>
     </div>
   );
 }

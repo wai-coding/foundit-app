@@ -8,7 +8,12 @@ const API_URL = "http://localhost:5005/products";
 
 const PRODUCTS_PER_PAGE = 12;
 
-function HomePage() {
+function HomePage({
+  favoriteIds,
+  setFavoriteIds,
+  showFavorites,
+  setShowFavorites,
+}) {
   // STATE MANAGEMENT
 
   // Stores the list of products fetched from the API
@@ -27,8 +32,7 @@ function HomePage() {
   const [statusFilter, setStatusFilter] = useState("all");
 
   // Favorites (with localStorage)
-  const [favoriteIds, setFavoriteIds] = useState([]);
-  const [showFavorites, setShowFavorites] = useState(false);
+
   const prevFavCount = useRef(0);
   const [favNotice, setFavNotice] = useState("");
   const favTimeoutRef = useRef(null);
@@ -67,7 +71,7 @@ function HomePage() {
     const favs = getFavoriteIds();
     setFavoriteIds(favs);
     prevFavCount.current = favs.length;
-  }, []);
+  }, [setFavoriteIds]);
 
   // Cleanup timeout (in case user navigates away before it clears)
   useEffect(() => {
@@ -116,54 +120,35 @@ function HomePage() {
 
   // FILTERING & SORTING LOGIC
 
-  // Build category options from the fetched products
-  const categoryOptions = Array.from(
-    new Set(products.map((p) => p.category).filter(Boolean))
-  ).sort();
-
   // Build condition options from the fetched products
-  const conditionOptions = Array.from(
-    new Set(products.map((p) => p.condition).filter(Boolean))
-  ).sort();
+  const CONDITIONS = [
+    "New",
+    "Used - Excellent",
+    "Used - Very Good",
+    "Used - Good",
+  ];
+
+  const CATEGORIES = [
+    "Accessories",
+    "Audio",
+    "Computers",
+    "Electronics",
+    "Home",
+    "Home Entertainment",
+    "Mobile Phones",
+    "Networking",
+    "Photography",
+    "Storage",
+    "Tablets",
+    "Transport",
+    "Video Games",
+    "Wearables",
+  ];
 
   // Favorites toggle handler
   const handleToggleFavorite = (id) => {
     const next = toggleFavorite(id);
     setFavoriteIds(next);
-  };
-
-  // Favorites button behavior (If user clicks Favorites but list is empty, show a message and keep All products visible. Otherwise toggle between Favorites and All products)
-  const handleFavoritesClick = () => {
-    if (showFavorites) {
-      setShowFavorites(false);
-      setFavNotice("");
-
-      if (favTimeoutRef.current) {
-        clearTimeout(favTimeoutRef.current);
-        favTimeoutRef.current = null;
-      }
-
-      return;
-    }
-
-    if (favoriteIds.length === 0) {
-      setFavNotice("No favorites yet.");
-
-      if (favTimeoutRef.current) clearTimeout(favTimeoutRef.current);
-      favTimeoutRef.current = setTimeout(() => {
-        setFavNotice("");
-        favTimeoutRef.current = null;
-      }, 2000);
-
-      return;
-    }
-
-    if (favTimeoutRef.current) {
-      clearTimeout(favTimeoutRef.current);
-      favTimeoutRef.current = null;
-    }
-
-    setShowFavorites(true);
   };
 
   // Decide which base list are displayed (all products or only favorites)
@@ -230,66 +215,61 @@ function HomePage() {
   // Displays the UI and renders the final list of products based on the current filters and sorting options
   return (
     <div>
-      <h1>Products</h1>
+      <div className="products-header">
+        <h1>Products</h1>
 
-      <div className="filters-bar">
-        <input
-          type="text"
-          placeholder="Search by title..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <div className="filters-bar">
+          <input
+            type="text"
+            placeholder="Search by title..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
 
-        <select
-          value={categoryFilter}
-          onChange={(e) => setCategoryFilter(e.target.value)}
-        >
-          <option value="all">All categories</option>
-          {categoryOptions.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
+          <select
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          >
+            <option value="all">All categories</option>
+            {CATEGORIES.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
 
-        <select
-          value={conditionFilter}
-          onChange={(e) => setConditionFilter(e.target.value)}
-        >
-          <option value="all">All conditions</option>
-          {conditionOptions.map((c) => (
-            <option key={c} value={c}>
-              {c}
-            </option>
-          ))}
-        </select>
+          <select
+            value={conditionFilter}
+            onChange={(e) => setConditionFilter(e.target.value)}
+          >
+            <option value="all">All conditions</option>
+            {CONDITIONS.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
 
-        <select
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value)}
-        >
-          <option value="all">All statuses</option>
-          <option value="available">Available</option>
-          <option value="sold">Sold</option>
-        </select>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+          >
+            <option value="all">All statuses</option>
+            <option value="available">Available</option>
+            <option value="sold">Sold</option>
+          </select>
 
-        <select value={sortOption} onChange={handleSortChange}>
-          <option value="">Default</option>
-          <option value="az">A - Z</option>
-          <option value="za">Z - A</option>
-          <option value="price-asc">Price ↑</option>
-          <option value="price-desc">Price ↓</option>
-          <option value="recent">Most recent</option>
-          <option value="old">Oldest</option>
-        </select>
-
-        <button type="button" onClick={handleFavoritesClick}>
-          {showFavorites ? "All products" : "Favorites"}
-        </button>
-
-        {favNotice && <p className="fav-notice">{favNotice}</p>}
+          <select value={sortOption} onChange={handleSortChange}>
+            <option value="">Default</option>
+            <option value="az">A - Z</option>
+            <option value="za">Z - A</option>
+            <option value="price-asc">Price ↑</option>
+            <option value="price-desc">Price ↓</option>
+            <option value="recent">Most recent</option>
+            <option value="old">Oldest</option>
+          </select>
+        </div>
       </div>
-
       {visibleProducts.length === 0 ? (
         <p>
           {showFavorites
@@ -307,26 +287,43 @@ function HomePage() {
               const isFav = favoriteIds.includes(String(p.id));
               return (
                 <li key={p.id} className="product-card">
-                  <img
-                    src={p.imgUrl?.trim() ? p.imgUrl : placeholderImg}
-                    alt={p.title}
-                    className="product-img"
-                  />
+                  <div className="image-wrapper">
+                    <img
+                      src={p.imgUrl?.trim() ? p.imgUrl : placeholderImg}
+                      alt={p.title}
+                      className="product-img"
+                    />
 
-                  <h3>{p.title}</h3>
-                  <p className="condition">{p.condition}</p>
-                  <p className={`status ${status}`}>{statusLabel}</p>
-                  <p className="price">{p.price} €</p>
+                    <span className={`badge ${status}`}>{statusLabel}</span>
+
+                    <button
+                      className={`fav-btn ${isFav ? "active" : ""}`}
+                      onClick={() => handleToggleFavorite(p.id)}
+                      aria-label="Toggle favorite"
+                    >
+                      ♥
+                    </button>
+                  </div>
+
+                  <div className="card-content">
+                    <h3 className="title">{p.title}</h3>
+                    <p className="condition">{p.condition}</p>
+                    <p className="price">{p.price} €</p>
+                  </div>
 
                   <div className="card-actions">
-                    <button onClick={() => navigate(`/product/${p.id}`)}>
+                    <button
+                      className="btn-primary"
+                      onClick={() => navigate(`/product/${p.id}`)}
+                    >
                       Details
                     </button>
-                    <button onClick={() => navigate(`/edit/${p.id}`)}>
+
+                    <button
+                      className="btn-secondary"
+                      onClick={() => navigate(`/edit/${p.id}`)}
+                    >
                       Edit
-                    </button>
-                    <button onClick={() => handleToggleFavorite(p.id)}>
-                      {isFav ? "❤️" : "🤍"}
                     </button>
                   </div>
                 </li>

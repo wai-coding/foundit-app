@@ -86,38 +86,57 @@ function DetailsPage() {
   // RENDER
   // Displays full product information and available actions
   return (
-    <div>
-      <h1>{product.title}</h1>
-      <img
-        src={product.imgUrl?.trim() ? product.imgUrl : placeholderImg}
-        alt={product.title}
-        className="product-img details-img"
-      />
-      <p>
-        <strong>Price:</strong> {product.price} €
-      </p>
-      <p>
-        <strong>Description:</strong> {product.description}
-      </p>
-      <p>
-        <strong>Category:</strong> {product.category}
-      </p>
-      <p>
-        <strong>Condition:</strong> {product.condition}
-      </p>
-      <p>
-        <strong>Seller:</strong> {product.sellerName}
-      </p>
-      <p>
-        <strong>Contact:</strong> {product.sellerContact}
-      </p>
-      <p>
-        <strong>Status:</strong>{" "}
-        <span className={`status ${status}`}>{statusLabel}</span>
-      </p>
+    <div className="details-page">
+      <div className="details-main">
+        {/* IMAGE */}
+        <div className="details-image">
+          <img
+            src={product.imgUrl?.trim() ? product.imgUrl : placeholderImg}
+            alt={product.title}
+          />
+        </div>
 
-      <section className="reviews">
-        <h2>Reviews</h2>
+        {/* INFO */}
+        <div className="details-info">
+          <h1>{product.title}</h1>
+
+          <p className="details-price">{product.price} €</p>
+
+          <span className={`status ${status}`}>{statusLabel}</span>
+
+          <p className="details-condition">{product.condition}</p>
+
+          <p className="details-description">{product.description}</p>
+
+          <div className="details-meta">
+            <p>
+              <strong>Category:</strong> {product.category}
+            </p>
+            <p>
+              <strong>Seller:</strong> {product.sellerName}
+            </p>
+            <p>
+              <strong>Contact:</strong> {product.sellerContact}
+            </p>
+          </div>
+
+          <div className="details-actions">
+            <button onClick={() => navigate(`/edit/${product.id}`)}>
+              Edit
+            </button>
+            <button className="danger" onClick={handleDelete}>
+              Delete
+            </button>
+            <button className="secondary" onClick={() => navigate("/")}>
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* REVIEWS */}
+      <section className="details-reviews">
+        <h2>Customer reviews</h2>
 
         {mockReviews.map((review) => (
           <div key={review.id} className="review">
@@ -128,11 +147,6 @@ function DetailsPage() {
           </div>
         ))}
       </section>
-      <div>
-        <button onClick={() => navigate(`/edit/${product.id}`)}>Edit</button>
-        <button onClick={handleDelete}>Delete</button>
-        <button onClick={() => navigate("/")}>Back</button>
-      </div>
     </div>
   );
 }
