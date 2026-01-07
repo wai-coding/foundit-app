@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import placeholderImg from "../assets/placeholder.png"; //fallback
 
 // Backend endpoint (json-server)
-const API_URL = "http://localhost:5005/products";
+// const API_URL = "http://localhost:5005/products";
 
 // Mock reviews (UI demonstration only)
 const mockReviews = [

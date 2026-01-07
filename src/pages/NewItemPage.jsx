@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // Backend endpoint (json-server)
-const API_URL = "http://localhost:5005/products";
+// const API_URL = "http://localhost:5005/products";
 
 function NewItemPage() {
   // Navigation hook to redirect after successful creation

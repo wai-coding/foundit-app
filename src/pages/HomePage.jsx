@@ -4,7 +4,7 @@ import placeholderImg from "../assets/placeholder.png"; //fallback
 import { getFavoriteIds, toggleFavorite } from "../components/Favorites";
 
 // Backend endpoint (json-server)
-const API_URL = "http://localhost:5005/products";
+// const API_URL = "http://localhost:5005/products";
 
 const PRODUCTS_PER_PAGE = 12;
 
