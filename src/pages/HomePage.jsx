@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import placeholderImg from "../assets/placeholder.png"; //fallback
 import { getFavoriteIds, toggleFavorite } from "../components/Favorites";
+import API_URL from "../config/apiConfig"
 
 // Backend endpoint (json-server)
 // const API_URL = "http://localhost:5005/products";
