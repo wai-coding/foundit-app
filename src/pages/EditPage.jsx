@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import placeholderImg from "../assets/placeholder.png"; //fallback
-import { API_URL } from "../config/apiConfig"
+import { API_URL } from "../config/apiConfig";
 
 // Backend endpoint (json-server)
 // const API_URL = "http://localhost:5005/products";
@@ -34,7 +34,7 @@ function EditPage() {
         setIsLoading(true);
         setErrorMsg("");
 
-        const response = await fetch(`${API_URL/products}/${id}`);
+        const response = await fetch(`${API_URL / products}/${id}`);
         if (!response.ok) throw new Error("Product not found");
 
         const data = await response.json();
@@ -94,7 +94,7 @@ function EditPage() {
     };
 
     try {
-      const response = await fetch(`${API_URL/products}/${id}`, {
+      const response = await fetch(`${API_URL / products}/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedProduct),

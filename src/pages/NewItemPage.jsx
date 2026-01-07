@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { API_URL } from "../config/apiConfig"
+import { API_URL } from "../config/apiConfig";
 
 // Backend endpoint (json-server)
 // const API_URL = "http://localhost:5005/products";
@@ -39,7 +39,7 @@ function NewItemPage() {
     };
 
     try {
-      const response = await fetch(API_URL/products, {
+      const response = await fetch(API_URL / products, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newProduct),
