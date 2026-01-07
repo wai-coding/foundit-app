@@ -38,7 +38,7 @@ function NewItemPage() {
     };
 
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(API_URL/products, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newProduct),

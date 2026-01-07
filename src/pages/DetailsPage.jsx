@@ -47,7 +47,7 @@ function DetailsPage() {
         setIsLoading(true);
         setErrorMsg("");
 
-        const response = await fetch(`${API_URL}/${id}`);
+        const response = await fetch(`${API_URL/products}/${id}`);
         if (!response.ok) throw new Error("Product not found");
 
         const data = await response.json();
@@ -66,7 +66,7 @@ function DetailsPage() {
   // Removes the product from the backend and redirects to homepage
   const handleDelete = async () => {
     try {
-      const response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+      const response = await fetch(`${API_URL/products}/${id}`, { method: "DELETE" });
       if (!response.ok) throw new Error("Failed to delete product");
       navigate("/");
     } catch (error) {
